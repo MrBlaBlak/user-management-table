@@ -1,6 +1,6 @@
 import StoreProvider from "@/app/redux/StoreProvider";
 import UserManagementTable from "@/app/components/UserManagementTable";
-import React from "react";
+import React, {Suspense} from "react";
 import FilterPanel from "@/app/components/FilterPanel";
 
 export default function Home() {
@@ -11,7 +11,9 @@ export default function Home() {
                 <div className="overflow-x-auto h-dvh">
                     <FilterPanel/>
                     <div className="divider"></div>
-                    <UserManagementTable/>
+                    <Suspense>
+                        <UserManagementTable/>
+                    </Suspense>
                 </div>
             </main>
         </StoreProvider>

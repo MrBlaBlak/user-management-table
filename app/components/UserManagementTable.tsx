@@ -1,13 +1,14 @@
 'use client'
 import React, {useEffect} from 'react';
 import {AppDispatch, RootState} from '../redux/store';
-import {setFilter, setUsers} from '../redux/userSlice';
+import {setFilter, setUsers, User} from '../redux/userSlice';
 import {useAppDispatch, useAppSelector} from "@/app/redux/hooks";
 
-type Props = { users: any };
+
+type Props = { users: User[] };
 const UserManagementTable = ({users}: Props) => {
     const dispatch = useAppDispatch<AppDispatch>();
-    const {filteredUsers, filters, status} = useAppSelector((state: RootState) => state.users)
+    const {filteredUsers, filters} = useAppSelector((state: RootState) => state.users)
 
     useEffect(() => {
         dispatch(setUsers(users));
@@ -18,65 +19,70 @@ const UserManagementTable = ({users}: Props) => {
         dispatch(setFilter({key: name, value}));
     };
 
-    if (status === 'loading') return <div>Loading...</div>;
-    if (status === 'failed') return <div>Error loading users</div>;
 
     return (
-        <>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Filter by name"
-                    name="name"
-                    value={filters.name}
-                    onChange={handleFilterChange}
-                />
-                <input
-                    type="text"
-                    placeholder="Filter by username"
-                    name="username"
-                    value={filters.username}
-                    onChange={handleFilterChange}
-                />
-                <input
-                    type="text"
-                    placeholder="Filter by email"
-                    name="email"
-                    value={filters.email}
-                    onChange={handleFilterChange}
-                />
-                <input
-                    type="text"
-                    placeholder="Filter by phone"
-                    name="phone"
-                    value={filters.phone}
-                    onChange={handleFilterChange}
-                />
+
+        <div className="overflow-x-auto h-dvh">
+            <div className="card bg-base-100 w-96 m-auto shadow-xl">
+                <div className="card-body">
+                    <h2 className="card-title">Filter data by:</h2>
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        name="name"
+                        value={filters.name}
+                        onChange={handleFilterChange}
+                        className="input w-full input-sm max-w-xs"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        value={filters.username}
+                        onChange={handleFilterChange}
+                        className="input w-full input-sm max-w-xs"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        value={filters.email}
+                        onChange={handleFilterChange}
+                        className="input w-full input-sm max-w-xs"
+                    />
+                    <input
+                        type="number"
+                        placeholder="Phone"
+                        name="phone"
+                        value={filters.phone}
+                        onChange={handleFilterChange}
+                        className="input w-full input-sm max-w-xs"
+                    />
+                </div>
             </div>
-            <div className="overflow-x-auto h-dvh">
-                <table
-                    className="table relative w-full rounded-lg text-left font-normal text-sm leading-relaxed text-indent-0 border-collapse border-gray-300">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+            <div className="divider"></div>
+            <table
+                className="table table-zebra table-sm">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+                </thead>
+                <tbody>
+                {filteredUsers.map((user) => (
+                    <tr key={user.id}>
+                        <td>{user.name}</td>
+                        <td>{user.username}</td>
+                        <td>{user.email}</td>
+                        <td>{user.phone}</td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {filteredUsers.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.name}</td>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                            <td>{user.phone}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
-        </>
+                ))}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

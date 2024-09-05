@@ -11,7 +11,7 @@ export default function Home() {
                 <div className="overflow-x-auto h-dvh">
                     <FilterPanel/>
                     <div className="divider"></div>
-                    <Suspense>
+                    <Suspense fallback={<span className="loading loading-spinner loading-lg absolute top-2/4 left-2/4"></span>}>
                         <UserManagementTable/>
                     </Suspense>
                 </div>

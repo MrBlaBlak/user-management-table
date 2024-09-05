@@ -1,13 +1,18 @@
 import StoreProvider from "@/app/redux/StoreProvider";
 import UserManagementTable from "@/app/components/UserManagementTable";
+import React from "react";
+import FilterPanel from "@/app/components/FilterPanel";
 
-export default async function Home() {
-    let data = await fetch('https://jsonplaceholder.typicode.com/users')
-    let users = await data.json()
+export default function Home() {
+
     return (
         <StoreProvider>
-            <main >
-                <UserManagementTable users={users}/>
+            <main>
+                <div className="overflow-x-auto h-dvh">
+                    <FilterPanel/>
+                    <div className="divider"></div>
+                    <UserManagementTable/>
+                </div>
             </main>
         </StoreProvider>
     );

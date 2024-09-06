@@ -2,6 +2,7 @@
 import React from 'react';
 
 import TableBody from "@/app/components/TableBody";
+import TableHead from "@/app/components/TableHead";
 
 const UserManagementTable = async () => {
 
@@ -9,19 +10,10 @@ const UserManagementTable = async () => {
         .then(data => data.json());
 
     return (
-        <table
-            className="table table-zebra table-sm">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-            </tr>
-            </thead>
+        <table className="table table-zebra table-sm">
+            <TableHead/>
             <TableBody users={users}/>
         </table>
-
     );
 };
 
